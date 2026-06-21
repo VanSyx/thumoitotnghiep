@@ -1,0 +1,9 @@
+node_modules
+dist
+server.js
+.git
+.github
+*.log
+.env
+.env.*
+!.env.example

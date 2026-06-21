@@ -1,0 +1,25 @@
+{
+  "invitation": {
+    "graduateName": "Phạm Thị Khánh Ly",
+    "title": "Thiệp Mời Tốt Nghiệp ",
+    "subtitle": "GRADUATION CEREMONY 2026",
+    "defaultGuestName": "Nguyễn Phước Nhân ",
+    "message": "Mot cot moc dang nho trong hanh trinh truong thanh. Tran trong kinh moi quy khach den chung vui, chia se niem vui tot nghiep cung gia dinh toi.",
+    "ceremonyDate": "2026-06-26T17:00:00+07:00",
+    "ceremonyDateLabel": "Thu Sau, 26 Thang 06, 2026",
+    "ceremonyTimeLabel": "17:00",
+    "venueName": "Sân trường Đại học Kinh tế Đà Nẵng",
+    "venueAddress": "71 Ngũ Hành Sơn, Đà Nẵng",
+    "googleMapsQuery": "Trường Đại học Kinh tế - Đại học Đà Nẵng",
+    "googleMapsPlaceId": "https://maps.app.goo.gl/5o6H7CnSofhyuGfq9",
+    "major": "Kế Toán ",
+    "portraitUrl": ""
+  },
+  "guests": [
+    {
+      "id": "ban-nguoi-than",
+      "name": "Ban & Nguoi Than",
+      "relationship": ""
+    }
+  ]
+}

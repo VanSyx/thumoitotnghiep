@@ -1,0 +1,6 @@
+{
+  "name": "Graduation Invitation",
+  "description": "Ứng dụng thiệp mời tốt nghiệp tương tác và tạo link mời trực tuyến cho Trần Văn Sỹ",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
