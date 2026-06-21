@@ -25,7 +25,7 @@ const fallbackInvitation: InvitationConfig = {
   subtitle: "GRADUATION CEREMONY 2026",
   defaultGuestName: "Ban & Nguoi Than",
   message:
-    "Mot cot moc dang nho trong hanh trinh truong thanh. Tran trong kinh moi quy khach den chung vui, chia se niem vui tot nghiep cung gia dinh toi.",
+    "Khép lại hành trình đại học đầy ý nghĩa, em xin trân trọng mời mọi người đến chung vui cùng em trong Lễ Tốt Nghiệp và lưu lại những tấm hình thật xinh xắn nhé ạ! 🎓🌸.",
   ceremonyDate: "2026-11-10T08:00:00+07:00",
   ceremonyDateLabel: "Thu Bay, 10 Thang 11, 2026",
   ceremonyTimeLabel: "08:00 AM - 11:30 AM",

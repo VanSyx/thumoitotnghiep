@@ -290,6 +290,24 @@ export function AdminPage() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <Field
+                label="Tiêu đề chính"
+                value={invitation.title}
+                onChange={(value) => updateInvitationField("title", value)}
+                placeholder="Ví dụ: Thiệp Mời Tốt Nghiệp"
+              />
+              <Field
+                label="Tiêu đề phụ"
+                value={invitation.subtitle}
+                onChange={(value) => updateInvitationField("subtitle", value)}
+                placeholder="Ví dụ: GRADUATION CEREMONY"
+              />
+              <Field
+                label="Chuyên ngành"
+                value={invitation.major}
+                onChange={(value) => updateInvitationField("major", value)}
+                placeholder="Ví dụ: Công nghệ thông tin"
+              />
+              <Field
                 label="Tên người nhận mặc định"
                 value={invitation.defaultGuestName}
                 onChange={(value) => updateInvitationField("defaultGuestName", value)}
@@ -326,6 +344,16 @@ export function AdminPage() {
                 value={invitation.googleMapsQuery}
                 onChange={(value) => updateInvitationField("googleMapsQuery", value)}
                 placeholder="https://maps.app.goo.gl/... hoặc tên địa điểm"
+              />
+            </div>
+
+            <div className="mt-4">
+              <Field
+                label="Lời nhắn (Message)"
+                value={invitation.message}
+                onChange={(value) => updateInvitationField("message", value)}
+                placeholder="Nhập lời nhắn gửi đến khách mời..."
+                isTextArea
               />
             </div>
 
@@ -574,21 +602,31 @@ interface FieldProps {
   placeholder?: string;
   helpText?: string;
   type?: string;
+  isTextArea?: boolean;
 }
 
-function Field({ label, value, onChange, placeholder, helpText, type = "text" }: FieldProps) {
+function Field({ label, value, onChange, placeholder, helpText, type = "text", isTextArea = false }: FieldProps) {
   return (
     <label className="block">
       <span className="mb-1 block text-xs font-bold uppercase tracking-wider text-heritage-gold">
         {label}
       </span>
-      <input
-        type={type}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        placeholder={placeholder}
-        className={fieldClass}
-      />
+      {isTextArea ? (
+        <textarea
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className={`${fieldClass} min-h-[100px] resize-y`}
+        />
+      ) : (
+        <input
+          type={type}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder={placeholder}
+          className={fieldClass}
+        />
+      )}
       {helpText && <span className="mt-1 block text-xs text-stone-500">{helpText}</span>}
     </label>
   );
