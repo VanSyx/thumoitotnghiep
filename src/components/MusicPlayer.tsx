@@ -3,20 +3,41 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
-export function MusicPlayer() {
+interface MusicPlayerProps {
+  isVisible?: boolean;
+}
+
+const backgroundMusicUrl = "/audio/background-music.mp3";
+const startMusicEventName = "graduation-invitation:start-music";
+
+export function MusicPlayer({ isVisible = true }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Create audio context lazy loading
-    audioRef.current = new Audio("https://assets.mixkit.co/music/preview/mixkit-dreaming-big-31.mp3");
+    audioRef.current = new Audio(backgroundMusicUrl);
     audioRef.current.loop = true;
-    audioRef.current.volume = 0.4;
+    audioRef.current.volume = 0.5;
+
+    const startMusic = () => {
+      if (!audioRef.current) return;
+
+      audioRef.current
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch((err) => {
+          console.log("Audio playback was prevented. Direct interaction required.", err);
+          setIsPlaying(false);
+        });
+    };
+
+    window.addEventListener(startMusicEventName, startMusic);
 
     return () => {
+      window.removeEventListener(startMusicEventName, startMusic);
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current = null;
@@ -26,19 +47,29 @@ export function MusicPlayer() {
 
   const togglePlayback = () => {
     if (!audioRef.current) return;
-    
+
     if (isPlaying) {
       audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch((err) => {
-        console.log("Audio autoplay was prevented. Direct interaction required.", err);
-      });
+      setIsPlaying(false);
+      return;
     }
-    setIsPlaying(!isPlaying);
+
+    audioRef.current
+      .play()
+      .then(() => setIsPlaying(true))
+      .catch((err) => {
+        console.log("Audio playback was prevented. Direct interaction required.", err);
+        setIsPlaying(false);
+      });
   };
 
   return (
-    <div id="music-player-widget" className="fixed top-4 right-4 z-[99] flex items-center gap-2">
+    <div
+      id="music-player-widget"
+      className={`fixed top-4 right-4 z-[99] flex items-center gap-2 transition-all duration-500 ${
+        isVisible ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-2"
+      }`}
+    >
       <button
         onClick={togglePlayback}
         aria-label="Power background music"
@@ -48,10 +79,13 @@ export function MusicPlayer() {
             : "bg-[#fdf8f8]/95 border-heritage-gold/30 text-heritage-gold hover:bg-gold-light"
         }`}
       >
-        {isPlaying ? <Volume2 size={16} className="sm:w-[18px] sm:h-[18px]" /> : <VolumeX size={16} className="sm:w-[18px] sm:h-[18px]" />}
+        {isPlaying ? (
+          <Volume2 size={16} className="sm:w-[18px] sm:h-[18px]" />
+        ) : (
+          <VolumeX size={16} className="sm:w-[18px] sm:h-[18px]" />
+        )}
       </button>
 
-      {/* Elegant audio waves */}
       {isPlaying && (
         <div className="flex items-end gap-0.5 h-6 bg-[#000a1e]/90 px-2 rounded-lg border border-heritage-gold/20 backdrop-blur-sm shadow-sm transition-all duration-300">
           <div className="w-0.5 bg-secondary-fixed animate-bounce h-4" style={{ animationDelay: "0.1s", animationDuration: "1s" }}></div>
@@ -64,4 +98,8 @@ export function MusicPlayer() {
       )}
     </div>
   );
+}
+
+export function startBackgroundMusic() {
+  window.dispatchEvent(new Event(startMusicEventName));
 }

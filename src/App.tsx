@@ -13,7 +13,7 @@ import {
 } from "./api";
 import { AdminPage } from "./components/AdminPage";
 import { CountDown } from "./components/CountDown";
-import { MusicPlayer } from "./components/MusicPlayer";
+import { MusicPlayer, startBackgroundMusic } from "./components/MusicPlayer";
 
 const fallbackInvitation: InvitationConfig = {
   graduateName: "Tran Van Sy",
@@ -102,6 +102,7 @@ function InvitationPage() {
   const handleOpenInvitation = () => {
     if (introPhase !== "message") return;
 
+    startBackgroundMusic();
     setIntroPhase("opening");
     window.setTimeout(() => {
       setIntroPhase("open");
@@ -122,7 +123,7 @@ function InvitationPage() {
         />
       )}
 
-      {introPhase === "open" && <MusicPlayer />}
+      <MusicPlayer isVisible={introPhase === "open"} />
 
       <div
         className={`relative z-10 transition-all duration-700 ${
@@ -308,9 +309,9 @@ function IntroOpening({ guestName, isOpening, onOpen }: IntroOpeningProps) {
             <MessageCircle size={22} />
           </div>
           <div className="intro-bubble">
-            <span className="intro-kicker">Tin nhan moi</span>
-            <strong>Ban co mot loi moi dac biet</strong>
-            <span className="intro-preview">Gui rieng den {guestName}</span>
+            <span className="intro-kicker">Tin nhắn mới</span>
+            <strong>Bạn có một lời nhắn đặc biệt nè!!!</strong>
+            <span className="intro-preview">Gửi riêng đến {guestName}</span>
           </div>
         </div>
 
@@ -330,7 +331,7 @@ function IntroOpening({ guestName, isOpening, onOpen }: IntroOpeningProps) {
         </div>
 
         <div className="intro-action">
-          <span>{isOpening ? "Dang mo thiep..." : "Cham de mo thiep"}</span>
+          <span>{isOpening ? "Đang mở thiệp..." : "Chạm để mở thiệp"}</span>
         </div>
         <div className="intro-sparkle-field" aria-hidden="true">
           <span></span>

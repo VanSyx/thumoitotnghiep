@@ -9,11 +9,11 @@ import {
 
 const emptyInvitation: InvitationConfig = {
   graduateName: "",
-  title: "Thiep Moi Tot Nghiep",
+  title: "Thiệp Mời Tốt Nghiệp",
   subtitle: "GRADUATION CEREMONY",
   defaultGuestName: "",
   message:
-    "Mot cot moc dang nho trong hanh trinh truong thanh. Tran trong kinh moi quy khach den chung vui, chia se niem vui tot nghiep cung gia dinh toi.",
+    "Ngày tốt nghiệp không chỉ khép lại một chặng đường học tập mà còn mở ra những hành trình mới phía trước. Mình xin trân trọng kính mời mọi người đến chung vui, cùng sẻ chia niềm hạnh phúc và lưu giữ những khoảnh khắc đáng nhớ của ngày đặc biệt này với mình nhaa !!.",
   ceremonyDate: "",
   ceremonyDateLabel: "",
   ceremonyTimeLabel: "",
