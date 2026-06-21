@@ -245,14 +245,6 @@ function InvitationPage() {
             </p>
           </div>
         </section>
-
-        {/* Divider */}
-        <div className="flex items-center justify-center gap-3 py-4">
-          <div className="h-[1px] bg-heritage-gold/25 flex-1 max-w-[120px]"></div>
-          <div className="w-1.5 h-1.5 rounded-full bg-heritage-gold/60"></div>
-          <div className="h-[1px] bg-heritage-gold/25 flex-1 max-w-[120px]"></div>
-        </div>
-
         {/* Contact Info Section */}
         {(invitation.phoneNumber || invitation.email || invitation.facebookUrl) && (
           <section className="pb-4">
@@ -309,6 +301,12 @@ function InvitationPage() {
             </div>
           </section>
         )}
+        {/* Divider */}
+        <div className="flex items-center justify-center gap-3 py-4">
+          <div className="h-[1px] bg-heritage-gold/25 flex-1 max-w-[120px]"></div>
+          <div className="w-1.5 h-1.5 rounded-full bg-heritage-gold/60"></div>
+          <div className="h-[1px] bg-heritage-gold/25 flex-1 max-w-[120px]"></div>
+        </div>
       </main>
 
       <footer className="bg-paper-white border-t border-heritage-gold/20 flex flex-col items-center gap-2 py-8 w-full px-5 text-center mt-12 relative z-10">
