@@ -70,32 +70,67 @@ export function MusicPlayer({ isVisible = true }: MusicPlayerProps) {
         isVisible ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 -translate-y-2"
       }`}
     >
-      <button
-        onClick={togglePlayback}
-        aria-label="Power background music"
-        className={`p-2.5 sm:p-3 rounded-full shadow-lg backdrop-blur-md border flex items-center justify-center transition-all duration-300 transform active:scale-90 ${
-          isPlaying
-            ? "bg-heritage-gold border-secondary text-white scale-105 animate-pulse-subtle"
-            : "bg-[#fdf8f8]/95 border-heritage-gold/30 text-heritage-gold hover:bg-gold-light"
-        }`}
-      >
-        {isPlaying ? (
-          <Volume2 size={16} className="sm:w-[18px] sm:h-[18px]" />
-        ) : (
-          <VolumeX size={16} className="sm:w-[18px] sm:h-[18px]" />
-        )}
-      </button>
-
+      {/* Equalizer bars when playing */}
       {isPlaying && (
-        <div className="flex items-end gap-0.5 h-6 bg-[#000a1e]/90 px-2 rounded-lg border border-heritage-gold/20 backdrop-blur-sm shadow-sm transition-all duration-300">
-          <div className="w-0.5 bg-secondary-fixed animate-bounce h-4" style={{ animationDelay: "0.1s", animationDuration: "1s" }}></div>
-          <div className="w-0.5 bg-secondary-fixed animate-bounce h-2" style={{ animationDelay: "0.3s", animationDuration: "0.8s" }}></div>
-          <div className="w-0.5 bg-secondary-fixed animate-bounce h-5" style={{ animationDelay: "0.5s", animationDuration: "1.2s" }}></div>
-          <div className="w-0.5 bg-secondary-fixed animate-bounce h-3" style={{ animationDelay: "0.2s", animationDuration: "0.9s" }}></div>
-          <div className="w-0.5 bg-secondary-fixed animate-bounce h-4" style={{ animationDelay: "0.4s", animationDuration: "1.1s" }}></div>
-          <span className="text-[9px] font-bold text-secondary-fixed uppercase tracking-wider font-sans pl-1">BGM</span>
+        <div
+          className="flex items-end gap-0.5 h-7 px-2.5 py-1 rounded-xl shadow-lg"
+          style={{ background: "rgba(124,58,237,0.92)", backdropFilter: "blur(8px)" }}
+        >
+          {[
+            { h: "16px", delay: "0.1s", dur: "1s" },
+            { h: "8px",  delay: "0.3s", dur: "0.8s" },
+            { h: "20px", delay: "0s",   dur: "1.2s" },
+            { h: "12px", delay: "0.2s", dur: "0.9s" },
+            { h: "16px", delay: "0.4s", dur: "1.1s" },
+          ].map((bar, i) => (
+            <div
+              key={i}
+              className="w-0.5 rounded-full animate-bounce"
+              style={{
+                height: bar.h,
+                animationDelay: bar.delay,
+                animationDuration: bar.dur,
+                background: i % 2 === 0 ? "#fbbf24" : "#f9a8d4",
+              }}
+            />
+          ))}
+          <span className="text-[9px] font-bold text-yellow-300 uppercase tracking-wider font-sans pl-1 self-center">
+            BGM
+          </span>
         </div>
       )}
+
+      {/* Play/Pause button */}
+      <button
+        onClick={togglePlayback}
+        aria-label={isPlaying ? "Tắt nhạc nền" : "Bật nhạc nền"}
+        title={isPlaying ? "Tắt nhạc nền 🔇" : "Bật nhạc nền 🎵"}
+        className="relative w-11 h-11 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 active:scale-90"
+        style={
+          isPlaying
+            ? { background: "linear-gradient(135deg,#7c3aed,#ec4899)", boxShadow: "0 0 0 3px rgba(236,72,153,0.35)" }
+            : { background: "white", border: "2.5px solid #c4b5fd", color: "#7c3aed" }
+        }
+      >
+        {/* Pulse ring when playing */}
+        {isPlaying && (
+          <span
+            className="absolute inset-0 rounded-full animate-ping"
+            style={{ background: "rgba(124,58,237,0.3)", animationDuration: "1.5s" }}
+          />
+        )}
+
+        {isPlaying ? (
+          <Volume2 size={17} className="text-white relative z-10" />
+        ) : (
+          <VolumeX size={17} className="relative z-10" style={{ color: "#7c3aed" }} />
+        )}
+
+        {/* Music note emoji overlay */}
+        <span className="absolute -top-1 -right-1 text-xs leading-none">
+          {isPlaying ? "🎵" : "🔇"}
+        </span>
+      </button>
     </div>
   );
 }
