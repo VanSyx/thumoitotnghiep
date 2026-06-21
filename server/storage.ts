@@ -16,6 +16,9 @@ export interface InvitationConfig {
   googleMapsPlaceId: string;
   major: string;
   portraitUrl: string;
+  phoneNumber: string;
+  email: string;
+  facebookUrl: string;
 }
 
 export interface GuestRecord {

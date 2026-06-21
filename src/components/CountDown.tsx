@@ -57,7 +57,7 @@ export function CountDown({ ceremonyDate }: CountDownProps) {
   return (
     <div id="countdown-section" className="flex flex-col items-center justify-center p-6 rounded-2xl glass-card border border-heritage-gold/30 shadow-md">
       <p className="font-sans font-semibold tracking-wider text-[11px] text-heritage-gold uppercase mb-3">
-        Dem nguoc den ngay gap mat
+        Sắp đến ngày được gặp mình rồi nè !!!
       </p>
       <div className="flex items-center gap-3 sm:gap-4">
         {Object.entries(timeLeft).map(([key, value]) => (

@@ -13,7 +13,10 @@
     "googleMapsQuery": "Trường Đại học Kinh tế - Đại học Đà Nẵng",
     "googleMapsPlaceId": "https://maps.app.goo.gl/5o6H7CnSofhyuGfq9",
     "major": "Kế Toán ",
-    "portraitUrl": ""
+    "portraitUrl": "",
+    "phoneNumber": "",
+    "email": "",
+    "facebookUrl": ""
   },
   "guests": [
     {

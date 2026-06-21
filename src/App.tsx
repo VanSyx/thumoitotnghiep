@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useState } from "react";
-import { BookOpen, Calendar, Mail, MapPin, Menu, MessageCircle, Navigation, Sparkles } from "lucide-react";
+import { BookOpen, Calendar, Globe, Mail, MapPin, Menu, MessageCircle, Navigation, Phone, Sparkles } from "lucide-react";
 import {
   buildGoogleMapsDirectionsUrl,
   getGuest,
@@ -31,6 +31,9 @@ const fallbackInvitation: InvitationConfig = {
   googleMapsPlaceId: "",
   major: "Information Technology",
   portraitUrl: "",
+  phoneNumber: "",
+  email: "",
+  facebookUrl: "",
 };
 
 function getDisplayYear(invitation: InvitationConfig) {
@@ -243,11 +246,69 @@ function InvitationPage() {
           </div>
         </section>
 
+        {/* Divider */}
         <div className="flex items-center justify-center gap-3 py-4">
           <div className="h-[1px] bg-heritage-gold/25 flex-1 max-w-[120px]"></div>
           <div className="w-1.5 h-1.5 rounded-full bg-heritage-gold/60"></div>
           <div className="h-[1px] bg-heritage-gold/25 flex-1 max-w-[120px]"></div>
         </div>
+
+        {/* Contact Info Section */}
+        {(invitation.phoneNumber || invitation.email || invitation.facebookUrl) && (
+          <section className="pb-4">
+            <p className="font-sans text-[11px] font-bold text-heritage-gold uppercase tracking-widest text-center mb-4">
+              LIÊN HỆ
+            </p>
+            <div className="grid gap-3">
+              {invitation.phoneNumber && (
+                <a
+                  href={`tel:${invitation.phoneNumber}`}
+                  className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-heritage-gold/20 shadow-sm hover:shadow-md transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gold-light/40 flex items-center justify-center text-heritage-gold border border-heritage-gold/15 shrink-0 group-hover:bg-heritage-gold group-hover:text-white transition-all">
+                    <Phone size={16} />
+                  </div>
+                  <div>
+                    <p className="font-sans text-[10px] font-bold text-heritage-gold uppercase tracking-wider">Điện thoại</p>
+                    <p className="font-serif text-[18px] font-bold text-midnight-navy">{invitation.phoneNumber}</p>
+                  </div>
+                </a>
+              )}
+              {invitation.email && (
+                <a
+                  href={`mailto:${invitation.email}`}
+                  className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-heritage-gold/20 shadow-sm hover:shadow-md transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gold-light/40 flex items-center justify-center text-heritage-gold border border-heritage-gold/15 shrink-0 group-hover:bg-heritage-gold group-hover:text-white transition-all">
+                    <Mail size={16} />
+                  </div>
+                  <div>
+                    <p className="font-sans text-[10px] font-bold text-heritage-gold uppercase tracking-wider">Email</p>
+                    <p className="font-serif text-[18px] font-bold text-midnight-navy">{invitation.email}</p>
+                  </div>
+                </a>
+              )}
+              {invitation.facebookUrl && (
+                <a
+                  href={invitation.facebookUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 p-4 rounded-2xl glass-card border border-heritage-gold/20 shadow-sm hover:shadow-md transition-all group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gold-light/40 flex items-center justify-center text-heritage-gold border border-heritage-gold/15 shrink-0 group-hover:bg-heritage-gold group-hover:text-white transition-all">
+                    <Globe size={16} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-sans text-[10px] font-bold text-heritage-gold uppercase tracking-wider">Facebook</p>
+                    <p className="font-serif text-[18px] font-bold text-midnight-navy truncate">
+                      {invitation.facebookUrl.replace(/^https?:\/\/(www\.)?facebook\.com\//, "").replace(/\/$/, "") || invitation.facebookUrl}
+                    </p>
+                  </div>
+                </a>
+              )}
+            </div>
+          </section>
+        )}
       </main>
 
       <footer className="bg-paper-white border-t border-heritage-gold/20 flex flex-col items-center gap-2 py-8 w-full px-5 text-center mt-12 relative z-10">
@@ -258,21 +319,24 @@ function InvitationPage() {
           ACADEMIC HERITAGE - VKU UNIVERSITY
         </p>
       </footer>
+      </div>
 
-      <div id="sticky-call-to-actions" className="fixed bottom-6 inset-x-0 z-40 max-w-[768px] mx-auto px-5 pointer-events-none">
-        <div className="pointer-events-auto w-full bg-midnight-navy rounded-full shadow-2xl border border-heritage-gold/30 flex p-1.5 gap-2 backdrop-blur-md justify-center">
-          <button
-            onClick={handleOpenMap}
-            className="w-full bg-heritage-gold hover:bg-gold-accent text-white font-sans text-xs font-black py-3.5 px-3 rounded-full flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-lg cursor-pointer"
-          >
-            <Navigation className="w-4 h-4 text-white stroke-[2.5]" />
-            <span className="truncate font-semibold tracking-wider text-[11px] uppercase">
-              Đường đến gặp tân cử nhân nè !!!!
-            </span>
-          </button>
+      {/* Sticky directions button — fixed outside conditional div, always floats on screen */}
+      {introPhase === "open" && (
+        <div id="sticky-call-to-actions" className="fixed bottom-6 inset-x-0 z-50 max-w-[768px] mx-auto px-5 pointer-events-none">
+          <div className="pointer-events-auto w-full bg-midnight-navy rounded-full shadow-2xl border border-heritage-gold/30 flex p-1.5 gap-2 backdrop-blur-md justify-center">
+            <button
+              onClick={handleOpenMap}
+              className="w-full bg-heritage-gold hover:bg-gold-accent text-white font-sans text-xs font-black py-3.5 px-3 rounded-full flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-lg cursor-pointer"
+            >
+              <Navigation className="w-4 h-4 text-white stroke-[2.5]" />
+              <span className="truncate font-semibold tracking-wider text-[11px] uppercase">
+                Đường đến gặp tân cử nhân nè !!!!
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
-      </div>
+      )}
     </div>
   );
 }

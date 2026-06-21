@@ -27,6 +27,9 @@ const emptyInvitation: InvitationConfig = {
   googleMapsPlaceId: "",
   major: "Information Technology",
   portraitUrl: "",
+  phoneNumber: "",
+  email: "",
+  facebookUrl: "",
 };
 
 const REL_OPTIONS = [
@@ -324,6 +327,33 @@ export function AdminPage() {
                 onChange={(value) => updateInvitationField("googleMapsQuery", value)}
                 placeholder="https://maps.app.goo.gl/... hoặc tên địa điểm"
               />
+            </div>
+
+            {/* Contact Info Fields */}
+            <div className="mt-5 border-t border-heritage-gold/15 pt-5">
+              <p className="mb-3 text-xs font-bold uppercase tracking-wider text-heritage-gold">
+                Thông tin liên hệ (hiển thị trên thiệp nếu được điền)
+              </p>
+              <div className="grid gap-4 md:grid-cols-3">
+                <Field
+                  label="Số điện thoại"
+                  value={invitation.phoneNumber}
+                  onChange={(value) => updateInvitationField("phoneNumber", value)}
+                  placeholder="Ví dụ: 0901 234 567"
+                />
+                <Field
+                  label="Email"
+                  value={invitation.email}
+                  onChange={(value) => updateInvitationField("email", value)}
+                  placeholder="Ví dụ: ten@gmail.com"
+                />
+                <Field
+                  label="Facebook URL"
+                  value={invitation.facebookUrl}
+                  onChange={(value) => updateInvitationField("facebookUrl", value)}
+                  placeholder="Ví dụ: https://facebook.com/username"
+                />
+              </div>
             </div>
 
             <div className="mt-5 rounded-lg bg-gold-light/25 p-4 text-sm text-stone-600">
