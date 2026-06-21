@@ -487,13 +487,74 @@ interface IntroOpeningProps {
   onOpen: () => void;
 }
 
+// Confetti config: many colorful pieces at different positions/speeds
+const CONFETTI_PIECES = [
+  { left: "5%",  w: 10, h: 8,  color: "#ec4899", dur: "3.2s", delay: "0s" },
+  { left: "12%", w: 7,  h: 12, color: "#7c3aed", dur: "4.1s", delay: "0.4s" },
+  { left: "20%", w: 9,  h: 9,  color: "#f97316", dur: "3.6s", delay: "0.8s" },
+  { left: "28%", w: 11, h: 7,  color: "#fbbf24", dur: "5.0s", delay: "0.2s" },
+  { left: "36%", w: 8,  h: 11, color: "#14b8a6", dur: "3.9s", delay: "1.1s" },
+  { left: "45%", w: 10, h: 8,  color: "#ec4899", dur: "4.4s", delay: "0.6s" },
+  { left: "54%", w: 7,  h: 10, color: "#7c3aed", dur: "3.3s", delay: "1.4s" },
+  { left: "62%", w: 12, h: 7,  color: "#22c55e", dur: "4.8s", delay: "0.3s" },
+  { left: "70%", w: 8,  h: 9,  color: "#f97316", dur: "3.7s", delay: "0.9s" },
+  { left: "78%", w: 9,  h: 11, color: "#0ea5e9", dur: "4.2s", delay: "1.6s" },
+  { left: "85%", w: 7,  h: 8,  color: "#fbbf24", dur: "3.5s", delay: "0.5s" },
+  { left: "92%", w: 11, h: 9,  color: "#ec4899", dur: "4.6s", delay: "1.2s" },
+  { left: "16%", w: 6,  h: 13, color: "#14b8a6", dur: "5.2s", delay: "2.1s" },
+  { left: "40%", w: 13, h: 6,  color: "#7c3aed", dur: "3.8s", delay: "1.8s" },
+  { left: "67%", w: 8,  h: 8,  color: "#f97316", dur: "4.5s", delay: "2.4s" },
+  { left: "88%", w: 10, h: 7,  color: "#22c55e", dur: "3.4s", delay: "0.7s" },
+];
+
+// Floating emojis on the background
+const FLOAT_EMOJIS = [
+  { emoji: "🎓", left: "8%",  bottom: "15%", dur: "3.5s", delay: "0s" },
+  { emoji: "✨", left: "22%", bottom: "25%", dur: "4.2s", delay: "0.7s" },
+  { emoji: "🎉", left: "75%", bottom: "18%", dur: "3.8s", delay: "1.2s" },
+  { emoji: "🌟", left: "88%", bottom: "30%", dur: "4.6s", delay: "0.4s" },
+  { emoji: "💜", left: "60%", bottom: "12%", dur: "3.2s", delay: "1.8s" },
+  { emoji: "🎊", left: "40%", bottom: "8%",  dur: "4.9s", delay: "0.9s" },
+];
+
 function IntroOpening({ guestName, isOpening, onOpen }: IntroOpeningProps) {
   return (
     <div className={`intro-screen ${isOpening ? "intro-screen--opening" : ""}`}>
-      <div className="intro-confetti intro-confetti-one" />
-      <div className="intro-confetti intro-confetti-two" />
-      <div className="intro-confetti intro-confetti-three" />
 
+      {/* ── Confetti rain ── */}
+      {CONFETTI_PIECES.map((p, i) => (
+        <div
+          key={i}
+          className="ic-confetti"
+          style={{
+            left: p.left,
+            width: p.w,
+            height: p.h,
+            background: p.color,
+            animationDuration: p.dur,
+            animationDelay: p.delay,
+            borderRadius: i % 3 === 0 ? "50%" : i % 3 === 1 ? "2px" : "0",
+          }}
+        />
+      ))}
+
+      {/* ── Floating emoji ── */}
+      {FLOAT_EMOJIS.map((e, i) => (
+        <div
+          key={i}
+          className="ic-emoji"
+          style={{
+            left: e.left,
+            bottom: e.bottom,
+            animationDuration: e.dur,
+            animationDelay: e.delay,
+          }}
+        >
+          {e.emoji}
+        </div>
+      ))}
+
+      {/* ── Main card ── */}
       <button
         type="button"
         onClick={onOpen}
@@ -501,47 +562,84 @@ function IntroOpening({ guestName, isOpening, onOpen }: IntroOpeningProps) {
         className="intro-card"
         aria-label="Mo thiep moi tot nghiep"
       >
-        <div className="intro-ribbon" aria-hidden="true">🎓 Special Day 🎓</div>
+        {/* Sparkle stars inside card */}
+        <div className="intro-sparkle-field" aria-hidden="true">
+          <span /><span /><span /><span /><span />
+        </div>
+
+        {/* Orange ribbon top-left */}
+        <div className="intro-ribbon" aria-hidden="true">
+          🎓 Special Day 🎓
+        </div>
+
+        {/* Wiggling sticker top-right */}
         <div className="intro-sticker" aria-hidden="true">
-          <Sparkles size={14} />
+          <Sparkles size={13} />
           <span>Yay! 🎉</span>
         </div>
 
-        <div className="intro-message">
-          <div className="intro-avatar">
-            <MessageCircle size={20} />
+        {/* ── Notification bubble ── */}
+        <div className="intro-notif">
+          <div className="intro-notif-avatar">
+            <div className="intro-notif-ping" aria-hidden="true" />
+            <MessageCircle size={19} />
           </div>
-          <div className="intro-bubble">
-            <span className="intro-kicker">💌 Tin nhắn mới</span>
-            <strong>Bạn có một lời nhắn đặc biệt nè!!!</strong>
-            <span className="intro-preview">Gửi riêng đến {guestName} 💕</span>
-          </div>
-        </div>
-
-        <div className="intro-envelope" aria-hidden="true">
-          <div className="intro-envelope-back" />
-          <div className="intro-letter">
-            <Sparkles size={15} />
-            <span>Graduation 🎓</span>
-          </div>
-          <div className="intro-envelope-flap" />
-          <div className="intro-seal">
-            <Star size={16} className="fill-current" />
-          </div>
-          <div className="intro-envelope-front">
-            <Mail size={28} />
+          <div className="intro-notif-text">
+            <div className="intro-notif-label">💌 Tin nhắn mới · Ngay bây giờ</div>
+            <div className="intro-notif-title">Bạn có một lời nhắn đặc biệt!!!</div>
+            <div className="intro-notif-sub">Gửi riêng đến bạn — chạm để xem 👇</div>
           </div>
         </div>
 
-        <div className="intro-action">
-          <span>{isOpening ? "✨ Đang mở thiệp..." : "👆 Chạm để mở thiệp"}</span>
+        {/* ── Envelope with orbiting stars ── */}
+        <div className="intro-orbit-scene" aria-hidden="true">
+          {/* Orbiting dots (inner ring) */}
+          <div className="intro-orbit-dot">⭐</div>
+          <div className="intro-orbit-dot">✨</div>
+          <div className="intro-orbit-dot">💫</div>
+          {/* Orbiting dots (outer ring, reverse) */}
+          <div className="intro-orbit-dot">🌟</div>
+          <div className="intro-orbit-dot">⚡</div>
+
+          {/* The envelope itself */}
+          <div className="intro-envelope">
+            <div className="intro-envelope-back" />
+            <div className="intro-letter">
+              <Sparkles size={14} />
+              <span>Graduation 🎓</span>
+            </div>
+            <div className="intro-envelope-flap" />
+            <div className="intro-seal">
+              <Star size={15} className="fill-current" />
+            </div>
+            <div className="intro-envelope-front">
+              <Mail size={26} />
+            </div>
+          </div>
         </div>
 
-        <div className="intro-sparkle-field" aria-hidden="true">
-          <span />
-          <span />
-          <span />
-          <span />
+        {/* ── Guest name badge ── */}
+        <div className="intro-guest-badge">
+          <div className="intro-guest-badge-inner">
+            <div className="intro-guest-label">💌 Gửi riêng đến</div>
+            <div className="intro-guest-name">{guestName}</div>
+          </div>
+        </div>
+
+        {/* ── CTA Button ── */}
+        <div className="intro-action" aria-hidden="true">
+          {isOpening ? (
+            <>
+              <Sparkles size={16} />
+              <span>✨ Đang mở thiệp...</span>
+            </>
+          ) : (
+            <>
+              <span>👆</span>
+              <span>Chạm để mở thiệp</span>
+              <span>🎊</span>
+            </>
+          )}
         </div>
       </button>
     </div>
