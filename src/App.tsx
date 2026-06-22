@@ -58,7 +58,6 @@ export default function App() {
 function InvitationPage() {
   const [invitation, setInvitation] = useState(fallbackInvitation);
   const [guestName, setGuestName] = useState(fallbackInvitation.defaultGuestName);
-  const [relation, setRelation] = useState("");
   const [introPhase, setIntroPhase] = useState<"message" | "opening" | "open">("message");
   const ceremonyYear = getDisplayYear(invitation);
 
@@ -80,7 +79,6 @@ function InvitationPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const guestParam = params.get("guest");
-    const relParam = params.get("rel");
 
     if (guestParam) {
       const value = guestParam.trim();
@@ -88,13 +86,11 @@ function InvitationPage() {
       getGuest(value)
         .then((guest) => {
           setGuestName(guest.name);
-          setRelation(guest.relationship);
         })
         .catch(() => {
           // Old links can still pass a plain guest name directly.
         });
     }
-    if (relParam) setRelation(relParam.trim());
   }, []);
 
   const handleOpenMap = () => {
@@ -246,11 +242,7 @@ function InvitationPage() {
                 >
                   {guestName}
                 </p>
-                {relation && (
-                  <span className="mt-1 inline-block text-[11px] font-bold text-pink-500 bg-pink-50 border border-pink-200 rounded-full px-3 py-0.5">
-                    {relation} 💕
-                  </span>
-                )}
+
               </div>
             </div>
 

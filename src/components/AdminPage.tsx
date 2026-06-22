@@ -32,15 +32,7 @@ const emptyInvitation: InvitationConfig = {
   facebookUrl: "",
 };
 
-const REL_OPTIONS = [
-  "Bạn Đại Học",
-  "Bạn Thân",
-  "Gia Đình / Họ Hàng",
-  "Giảng Viên",
-  "Em Khoá Dưới",
-  "Đồng Nghiệp",
-  "Khác",
-];
+
 
 const fieldClass =
   "w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-800 outline-none focus:border-heritage-gold focus:ring-2 focus:ring-heritage-gold/15";
@@ -106,7 +98,6 @@ export function AdminPage() {
   const [guests, setGuests] = useState<GuestRecord[]>([]);
   const [isLoadingGuests, setIsLoadingGuests] = useState(false);
   const [newGuestName, setNewGuestName] = useState("");
-  const [newGuestRel, setNewGuestRel] = useState(REL_OPTIONS[0]);
   const [isAddingGuest, setIsAddingGuest] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -210,7 +201,7 @@ export function AdminPage() {
     setGuestError("");
     setIsAddingGuest(true);
     try {
-      const created = await createGuest({ name, relationship: newGuestRel }, adminToken);
+      const created = await createGuest({ name, relationship: "" }, adminToken);
       setGuests((prev) => [...prev, created]);
       setNewGuestName("");
     } catch (err) {
@@ -465,15 +456,7 @@ export function AdminPage() {
                 placeholder="Tên khách mời (ví dụ: Nguyễn Văn A)"
                 className={fieldClass}
               />
-              <select
-                value={newGuestRel}
-                onChange={(e) => setNewGuestRel(e.target.value)}
-                className={`${fieldClass} sm:w-44`}
-              >
-                {REL_OPTIONS.map((r) => (
-                  <option key={r} value={r}>{r}</option>
-                ))}
-              </select>
+
               <button
                 onClick={handleAddGuest}
                 disabled={isAddingGuest || !newGuestName.trim()}
@@ -512,7 +495,6 @@ export function AdminPage() {
                   <tr className="border-b border-stone-100 bg-stone-50">
                     <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-heritage-gold">#</th>
                     <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-heritage-gold">Tên khách</th>
-                    <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-heritage-gold hidden sm:table-cell">Quan hệ</th>
                     <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-heritage-gold hidden md:table-cell">ID trong link</th>
                     <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-heritage-gold">Thao tác</th>
                   </tr>
@@ -524,16 +506,6 @@ export function AdminPage() {
                       <td className="px-4 py-3">
                         <span className="font-serif text-[15px] font-bold text-midnight-navy">
                           {guest.name}
-                        </span>
-                        {guest.relationship && (
-                          <span className="ml-2 sm:hidden text-xs text-heritage-gold">
-                            • {guest.relationship}
-                          </span>
-                        )}
-                      </td>
-                      <td className="px-4 py-3 hidden sm:table-cell">
-                        <span className="inline-flex items-center rounded-full border border-heritage-gold/20 bg-gold-light/30 px-2.5 py-0.5 text-[11px] font-bold text-heritage-gold">
-                          {guest.relationship || "—"}
                         </span>
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell">

@@ -6,7 +6,7 @@
     "defaultGuestName": "...",
     "message": "Khép lại hành trình đại học đầy ý nghĩa, em xin trân trọng mời mọi người đến chung vui cùng em trong Lễ Tốt Nghiệp và lưu lại những tấm hình thật xinh xắn nhé ạ! 🎓🌸",
     "ceremonyDate": "2026-06-26T17:00:00+07:00",
-    "ceremonyDateLabel": "Thứ Sáu, ngày 26 tháng 6 năm 2026",
+    "ceremonyDateLabel": "Thu Sau, 26 Thang 06, 2026",
     "ceremonyTimeLabel": "17:00",
     "venueName": "Sân trường Đại học Kinh tế Đà Nẵng",
     "venueAddress": "71 Ngũ Hành Sơn, Đà Nẵng",
@@ -22,6 +22,16 @@
     {
       "id": "ban-nguoi-than",
       "name": "Ban & Nguoi Than",
+      "relationship": ""
+    },
+    {
+      "id": "abskjsa",
+      "name": "abskjsa",
+      "relationship": ""
+    },
+    {
+      "id": "abc",
+      "name": "abc",
       "relationship": ""
     }
   ]
